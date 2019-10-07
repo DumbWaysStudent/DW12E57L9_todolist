@@ -29,6 +29,12 @@ addTodo (item) {
 
     this.setState({ todo: newTodo })
   }
+  deleteTodo (index) {
+    const newTodo = this.state.todo
+    newTodo.splice(index, 1)
+
+    this.setState({ todo: newTodo })
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -43,7 +49,8 @@ addTodo (item) {
 
       <View style={styles.list}>
         <List
-          todo={this.state.todo} />
+         todo={this.state.todo}
+         deleteTodo={(value) => this.deleteTodo(value)}/>
       </View>
 
 

@@ -1,23 +1,31 @@
 import React, { Component } from 'react';
 import { FlatList, Text, View, StyleSheet, Image } from 'react-native';
+import DeleteTodo from './DeleteTodo';
 
-
-Item = ({ title }) => {
+Item = (props) => {
     return (
         <View style={styles.itemcontainer}>
-            <Text style={styles.title}> {title.item} </Text>
+            <Text style={styles.title}> {props.title} </Text>
+            <DeleteTodo deleteTodo={() => props.deleteTodo()} />
         </View>
     )
 }
+
 
 class List extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <FlatList
+                    <FlatList
                     data={this.props.todo}
-                    renderItem={(item) => <Item title={item} />}
+                    renderItem={({item, index}) =>
+                        <Item
+                            title={item}
+                            index={index}
+                            deleteTodo={() => this.props.deleteTodo(index)}  />
+                    }
                     keyExtractor={(item, index) => index}
+
                 />
             </View>
         )
