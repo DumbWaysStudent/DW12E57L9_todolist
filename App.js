@@ -5,11 +5,30 @@ import {
   StyleSheet,
 } from 'react-native';
 import List from './src/Component/List';
-
+import AddTodo from './src/Component/AddTodo';
 
 
 class App extends Component {
-  
+  constructor(){
+    super()
+    this.state = {
+        todo: [
+            'work',
+            'swim',
+            'study',
+            'sleep',
+            'run'
+        ]
+    }
+}
+
+addTodo (item) {
+    console.log(this.state)
+    const newTodo = this.state.todo
+    newTodo.push(item)
+
+    this.setState({ todo: newTodo })
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -18,13 +37,15 @@ class App extends Component {
                 <Text style={styles.title}> To Do</Text>
             </View>
 
-        <View style={styles.input}>
+            <View style={styles.textinputcontainer}>
+        <AddTodo addTodo={(value) => this.addTodo(value)} />
+      </View>
 
-        </View>
+      <View style={styles.list}>
+        <List
+          todo={this.state.todo} />
+      </View>
 
-        <View style={styles.list}>
-        <List />
-        </View>
 
       </View>
     )
@@ -38,6 +59,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
     
   },
+  todocontainer: {
+    flex: 1,
+    justifyContent: 'center'
+  },
   input:{
     flex: 0,
     justifyContent: 'center',
@@ -48,7 +73,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color :'brown'
   },
+  textinputcontainer:{
+    flex: 0,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'white'
+  },
   container: {
+    backgroundColor: 'black',
     flex: 1,
     flexDirection: 'column'
   },
