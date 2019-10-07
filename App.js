@@ -18,7 +18,8 @@ class App extends Component {
           {title:'study', isDone: false},
           {title:'sleep', isDone: false},
           {title:'run', isDone: false}
-      ]
+      ],
+      activeItemId: null,
     }
 }
 
@@ -40,6 +41,24 @@ addTodo (item) {
     newTodo[index].isDone = !newTodo[index].isDone
     this.setState({ todo: newTodo })
   }
+  updateTodo (index) {
+    if (this.state.activeItemId !== null) {
+      const newTodo = this.state.todo
+      this.state.activeItemId = null;
+      this.setState({ todo: newTodo })
+    }
+    else {
+      const newTodo = this.state.todo
+      this.state.activeItemId = index;
+      this.setState({ todo: newTodo })
+    }
+  }
+
+  onChangeTodo (newTitle) {
+    const newTodo = this.state.todo
+    newTodo[this.state.activeItemId].title = newTitle
+    this.setState({ todo: newTodo })
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -55,8 +74,11 @@ addTodo (item) {
       <View style={styles.list}>
         <List
         todo={this.state.todo}
+        onChangeTodo={(newTitle) => this.onChangeTodo(newTitle)}
         deleteTodo={(value) => this.deleteTodo(value)}
         isDone={(value) => this.isDone(value)}
+        updateTodo={(value) => this.updateTodo(value)}
+        activeItemId={this.state.activeItemId}
        />
       </View>
 
