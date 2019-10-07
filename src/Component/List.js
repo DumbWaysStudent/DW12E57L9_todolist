@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { FlatList, Text, View, StyleSheet, Image } from 'react-native';
+import { FlatList, Text, View, StyleSheet,CheckBox, Image } from 'react-native';
 import DeleteTodo from './DeleteTodo';
 
 Item = (props) => {
     return (
         <View style={styles.itemcontainer}>
+         <CheckBox
+                onChange={props.isDone}
+                value={props.check}/>
             <Text style={styles.title}> {props.title} </Text>
             <DeleteTodo deleteTodo={() => props.deleteTodo()} />
-        </View>
+            </View>
     )
 }
 
@@ -16,17 +19,17 @@ class List extends Component {
     render(){
         return(
             <View style={styles.container}>
-                    <FlatList
+                     <FlatList
                     data={this.props.todo}
                     renderItem={({item, index}) =>
                         <Item
-                            title={item}
+                            title={item.title}
+                            check={item.isDone}
                             index={index}
-                            deleteTodo={() => this.props.deleteTodo(index)}  />
+                            deleteTodo={() => this.props.deleteTodo(index)}
+                            isDone= {() => this.props.isDone(index)}  />
                     }
-                    keyExtractor={(item, index) => index}
-
-                />
+                    keyExtractor={(item, index) => index}               />
             </View>
         )
     }

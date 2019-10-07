@@ -12,13 +12,13 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-        todo: [
-            'work',
-            'swim',
-            'study',
-            'sleep',
-            'run'
-        ]
+      todo: [
+          {title:'work', isDone: false},
+          {title:'swim', isDone: false},
+          {title:'study', isDone: false},
+          {title:'sleep', isDone: false},
+          {title:'run', isDone: false}
+      ]
     }
 }
 
@@ -35,6 +35,11 @@ addTodo (item) {
 
     this.setState({ todo: newTodo })
   }
+  isDone (index) {
+    const newTodo = this.state.todo
+    newTodo[index].isDone = !newTodo[index].isDone
+    this.setState({ todo: newTodo })
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -49,8 +54,10 @@ addTodo (item) {
 
       <View style={styles.list}>
         <List
-         todo={this.state.todo}
-         deleteTodo={(value) => this.deleteTodo(value)}/>
+        todo={this.state.todo}
+        deleteTodo={(value) => this.deleteTodo(value)}
+        isDone={(value) => this.isDone(value)}
+       />
       </View>
 
 
